@@ -1,0 +1,335 @@
+@font-face {
+  font-family: 'Outfit';
+  src: url("Outfit.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: 'Unbounded';
+  src: url("Unbounded.ttf") format("truetype");
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+aside::-webkit-scrollbar {
+  width: 5px;
+}
+
+.infobox::-webkit-scrollbar {
+  width: 2.5px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--brightened); 
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--xx-brightened); 
+}
+
+::placeholder {
+  user-select: none;
+}
+
+::selection {
+  background-color: #003B72;
+}
+
+* {
+  outline: none;
+  transition: background-color 0.2s, color 0.2s, scale 0.2s, opacity 0.2s;
+}
+
+html {
+  scroll-behavior: smooth;
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #202020;
+  box-shadow: 0 0 500px 0 #000000A0 inset;
+  color: #FFFFFF;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  font-family: 'Outfit', sans-serif;
+  font-size: 18px;
+}
+
+h1 {
+  font-family: "Unbounded", sans-serif;
+  text-transform: uppercase;
+}
+
+main {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+}
+
+footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  bottom: 30px;
+  font-size: 12px;
+  opacity: 0.8;
+}
+
+footer p {
+  margin: 0;
+}
+
+footer:hover {
+  opacity: 1;
+}
+
+button {
+  cursor: pointer;
+}
+
+button + button {
+  margin-left: 5px;
+}
+
+.puffles-playercard-generator.is-loading {
+  justify-content: center;
+  width: calc(100% - 24px);
+}
+
+.puffles-playercard-generator.is-loading * {
+  visibility: hidden;
+}
+
+.puffles-playercard-generator-loading-placeholder {
+  display: none;
+}
+
+.puffles-playercard-generator-loading-placeholder {
+  -webkit-animation: pufflesLoadingAnimation infinite 8s;
+  animation: pufflesLoadingAnimation infinite 8s;
+  background: #615b5b;
+  margin: auto;
+  position: absolute;
+  padding: 12px;
+  height: 36px;
+  width: 36px;
+}
+
+.puffles-playercard-generator.is-loading
+  .puffles-playercard-generator-loading-placeholder {
+  display: block;
+  visibility: visible;
+}
+
+@keyframes pufflesLoadingAnimation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@-webkit-keyframes pufflesLoadingAnimation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.puffles-playercard-generator-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.puffles-playercard-item-search-result {
+  font-size: 12px;
+  margin: 8px 0;
+}
+
+.puffles-playercard-item-search-error {
+  background: #d63638;
+  color: white;
+  padding: 4px;
+  display: none;
+}
+
+.puffles-playercard-canvas {
+  width: 320px;
+}
+
+.puffles-playercard-generator-download-button-wrapper {
+  float: right;
+  margin-top: 24px;
+}
+
+.puffles-playercard-generator-items select option {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media only screen and (max-width: 768px) {
+  .puffles-playercard-generator {
+    flex-direction: column;
+  }
+
+  .puffles-playercard-generator-wrapper {
+    margin: auto;
+    margin-bottom: 12px;
+    text-align: center;
+  }
+
+  .puffles-playercard-canvas {
+    display: block;
+    margin: auto;
+    width: 320px;
+  }
+
+  .puffles-playercard-generator-download-button-wrapper {
+    padding: 8px;
+  }
+
+  .puffles-playercard-generator-download-button {
+    background: #1b5f9d;
+    background: linear-gradient(
+      163deg,
+      rgba(66, 165, 236, 1) 0%,
+      rgb(28, 95, 158) 77%
+    );
+    color: white;
+    padding: 8px;
+    border-radius: 8px;
+  }
+}
+
+.puffles-playercard-generator-items {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.puffles-playercard-generator-items div {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+.puffles-playercard-generator-items div div {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  font-weight: bold;
+}
+
+input {
+  font-family: 'Outfit', sans-serif;
+  padding: 4px;
+  border-radius: 4px;
+  border: none;
+  background-color: #ffffff40;
+  color: #ffffff;
+  width: 250px;
+  scale: 0.95;
+}
+
+input:hover {
+  background-color: #ffffff30;
+  scale: 0.975;
+}
+
+input:active,
+input:focus {
+  background-color: #ffffff20;
+  scale: 1;
+}
+
+input::placeholder {
+  color: #e0e0e080;
+}
+
+button {
+  font-family: 'Outfit', sans-serif;
+  background-color: #ffffff40;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 8px;
+  border: none;
+  scale: 0.95;
+}
+
+button.large-button {
+  border-radius: 15px;
+  padding: 5px 15px;
+  font-weight: 500;
+  font-size: 20px;
+}
+
+button:hover {
+  background-color: #ffffff30;
+  scale: 0.975;
+}
+
+button:active,
+button:focus {
+  background-color: #ffffff20;
+  scale: 1;
+}
+
+canvas {
+  margin: 20px 0;
+}
+
+select {
+  font-family: 'Outfit', sans-serif;
+  padding: 4px;
+  border-radius: 4px;
+  border: none;
+  background: #ffffff40;
+  color: #ffffff;
+}
+
+option {
+  color: black;
+}
+
+a {
+  color: #9ad7ff;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #67afdf;
+}
+
+a:active,
+a:focus {
+  color: #3683b6;
+}
+
+.puffles-playercard-generator-items div div select {
+  width: 300px;
+}

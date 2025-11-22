@@ -1,6 +1,12 @@
-pufflesPlayercardItems = {
+config = {
   directory: "assets/",
+  saveFileAs: "My Penguin Avatar.png",
 };
+
+async function preload(file) {
+  fetch(file);
+}
+
 var allPufflesBackItems = [];
 
 window.onload = function () {
@@ -18,34 +24,31 @@ window.onload = function () {
     allPufflesBackItems.push(pufflesBackItems[i].paper_item_id);
   }
   pufflesRememberItems();
-  document.getElementById("puffles-playercard").classList.remove("is-loading");
+  document.querySelector("#puffles-playercard").classList.remove("is-loading");
 };
 
 function pufflesConstructPlayercardCanvas() {
-  var canvas = document.getElementById("puffles-canvas");
+  var canvas = document.querySelector("#puffles-canvas");
   var ctx = canvas.getContext("2d");
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   // No loop here because layers must follow this specific order.
+  ctx.drawImage(document.querySelector("#puffles-9-item-image"), 10, 10);
+  ctx.drawImage(document.querySelector("#puffles-1-item-image"), 10, 10);
+  ctx.drawImage(document.querySelector("#puffles-7-item-image"), 10, 10);
+  ctx.drawImage(document.querySelector("#puffles-5-item-image"), 10, 10);
+  ctx.drawImage(document.querySelector("#puffles-4-item-image"), 10, 10);
+  ctx.drawImage(document.querySelector("#puffles-10-item-image"), 10, 10);
+  ctx.drawImage(document.querySelector("#puffles-3-item-image"), 10, 10);
+  ctx.drawImage(document.querySelector("#puffles-2-item-image"), 10, 10);
+  ctx.drawImage(document.querySelector("#puffles-6-item-image"), 10, 10);
+  ctx.drawImage(document.querySelector("#puffles-8-item-image"), 10, 10);
 
-  ctx.drawImage(document.getElementById("puffles-9-item-image"), 10, 10);
-  ctx.drawImage(document.getElementById("puffles-1-item-image"), 10, 10);
-  ctx.drawImage(document.getElementById("puffles-7-item-image"), 10, 10);
-  ctx.drawImage(document.getElementById("puffles-5-item-image"), 10, 10);
-  ctx.drawImage(document.getElementById("puffles-4-item-image"), 10, 10);
-  ctx.drawImage(document.getElementById("puffles-10-item-image"), 10, 10);
-  ctx.drawImage(document.getElementById("puffles-3-item-image"), 10, 10);
-  ctx.drawImage(document.getElementById("puffles-2-item-image"), 10, 10);
-  ctx.drawImage(document.getElementById("puffles-6-item-image"), 10, 10);
-  ctx.drawImage(document.getElementById("puffles-8-item-image"), 10, 10);
-
-  document.getElementById(
-    "puffles-playercard-download"
-  ).onclick = function() {
+  document.querySelector("#puffles-playercard-download").onclick = function() {
     const dataUrl = canvas.toDataURL("image/png"); // Get the base64 image data from canvas
     
     const a = document.createElement('a');  // Create a temporary anchor element
     a.href = dataUrl;  // Set the href to the image data
-    a.download = 'My Penguin Avatar.png';  // Set the filename for download
+    a.download = config.saveFileAs;  // Set the filename for download
     a.click();  // Programmatically trigger the download
   }
 }
@@ -71,14 +74,14 @@ function pufflesBuildAllOptions() {
   for (i = 0; i < 10; i++) {
     pufflesBuildOptions(i);
   }
-  document.getElementById("puffles-1-item").value = "Aqua";
+  document.querySelector("#puffles-1-item").value = "Aqua";
 }
 
 function pufflesBuildOptions(id) {
   var found = pufflesQueryPlayercardData(id);
   var i;
   for (i = 0; i < found.length; i++) {
-    var pufflesSelectId = document.getElementById("puffles-" + id + "-item");
+    var pufflesSelectId = document.querySelector("#puffles-" + id + "-item");
     var option = document.createElement("option");
     var item = found[i].label;
     option.text = item;
@@ -96,53 +99,38 @@ function pufflesBuildOptions(id) {
 
 // TODO: Rewrite this - the amount of nested logic and repeated code gives me a headache.
 function pufflesSearchItem(addItem) {
-  var enteredInput = document.getElementById("puffles-item-search").value;
+  var enteredInput = document.querySelector("#puffles-item-search").value.replaceAll("  ", " ").trim();
 
   if (enteredInput === "") {
-    document.getElementById("puffles-item-search-result").innerHTML =
-      "Enter an item's name or ID above first.";
+    document.querySelector("#puffles-item-search-result").innerHTML = "Please provide an item name or ID!";
   } else {
     if (/^\d+$/.test(enteredInput)) {
       var found = pufflesSearchById(enteredInput);
       if (found) {
         var category = pufflesGetCategoryByType(found.type);
-        document.getElementById("puffles-item-search-result").innerHTML =
-          "Found item <strong>" +
-          found.label +
-          "</strong> in the " +
-          "<strong>" +
-          category +
-          "</strong> category.";
-
-        if (addItem) {
-          document.getElementById("puffles-" + found.type + "-item").value =
-            found.label;
+        if (!addItem) {
+          document.querySelector("#puffles-item-search-result").innerHTML = `<b>${found.label}</b> exists in the <b>${category}</b> category! Click 'Add' to add it to the avatar.`;
+        } else {
+          document.querySelector("#puffles-item-search-result").innerHTML = `<b>${found.label}</b> from the <b>${category}</b> category added.`;
+          document.querySelector("#puffles-" + found.type + "-item").value = found.label;
           pufflesUpdateItem(found.type);
         }
       } else {
-        document.getElementById("puffles-item-search-result").innerHTML =
-          "Item not found";
+        document.querySelector("#puffles-item-search-result").innerHTML = "This item could not be found!";
       }
     } else {
       var found = pufflesSearchByLabel(enteredInput);
       if (found) {
         var category = pufflesGetCategoryByType(found.type);
-        document.getElementById("puffles-item-search-result").innerHTML =
-          "Found item <strong>" +
-          found.label +
-          "</strong> in the " +
-          "<strong>" +
-          category +
-          "</strong> category.";
-
-        if (addItem) {
-          document.getElementById("puffles-" + found.type + "-item").value =
-            found.label;
+        if (!addItem) {
+          document.querySelector("#puffles-item-search-result").innerHTML = `<b>${found.label}</b> exists in the <b>${category}</b> category! Click 'Add' to add it to the avatar.`
+        } else {
+          document.querySelector("#puffles-item-search-result").innerHTML = `<b>${found.label}</b> from the <b>${category}</b> category added.`;
+          document.querySelector("#puffles-" + found.type + "-item").value = found.label;
           pufflesUpdateItem(found.type);
         }
       } else {
-        document.getElementById("puffles-item-search-result").innerHTML =
-          "No item found";
+        document.querySelector("#puffles-item-search-result").innerHTML = "This item could not be found!";
       }
     }
   }
@@ -164,7 +152,7 @@ function pufflesGetCategoryByType(itemTypeId) {
   let category;
   switch (itemTypeId) {
     case 1:
-      category = "Colours";
+      category = "Colors";
       break;
     case 2:
       category = "Head Items";
@@ -191,7 +179,7 @@ function pufflesGetCategoryByType(itemTypeId) {
       category = "Backgrounds";
       break;
     default:
-      category = "N/A";
+      category = "Unknown";
       break;
   }
 
@@ -216,12 +204,12 @@ function pufflesRememberItems() {
 function pufflesClearPlayercard() {
   var i;
   for (i = 2; i < 10; i++) {
-    document.getElementById("puffles-" + i + "-item").selectedIndex = -1;
+    document.querySelector("#puffles-" + i + "-item").selectedIndex = -1;
     if (typeof Storage !== "undefined") {
       localStorage.removeItem("puffles-playercard-generator-" + i);
     }
-    document.getElementById("puffles-" + i + "-item-image").src =
-      pufflesPlayercardItems.directory + "empty.png";
+    document.querySelector("#puffles-" + i + "-item-image").src =
+      config.directory + "empty.png";
   }
 
   setTimeout(pufflesConstructPlayercardCanvas, 200);
@@ -232,15 +220,8 @@ function pufflesClearPlayercard() {
 
 function pufflesBlockMultipleGeneratorsOnSamePage() {
   var i;
-  for (
-    i = 1;
-    i < document.getElementsByClassName("puffles-playercard-generator").length;
-    i++
-  ) {
-    document.getElementsByClassName("puffles-playercard-generator")[
-      i
-    ].innerHTML =
-      "<p>Please click <a onclick='pufflesScrollToPlayercard()'>here</a> to use the playercard generator.</p>";
+  for (i = 1; i < document.getElementsByClassName("puffles-playercard-generator").length; i++) {
+    document.getElementsByClassName("puffles-playercard-generator")[i].innerHTML = "<p>Please click <a onclick='pufflesScrollToPlayercard()'>here</a> to use the playercard generator.</p>";
     document
       .getElementsByClassName("puffles-playercard-generator")
       [i].classList.remove("is-loading");
@@ -248,7 +229,7 @@ function pufflesBlockMultipleGeneratorsOnSamePage() {
 }
 
 function pufflesScrollToPlayercard() {
-  document.getElementById("puffles-playercard").scrollIntoView();
+  document.querySelector("#puffles-playercard").scrollIntoView();
 }
 
 function pufflesDoesFileExist(url, callback) {
@@ -291,18 +272,18 @@ function pufflesSearchByLabel(label) {
 function pufflesUpdateItem(itemTypeId) {
   let selectId;
 
-  var sel = document.getElementById("puffles-" + itemTypeId + "-item");
+  var sel = document.querySelector("#puffles-" + itemTypeId + "-item");
   var found = pufflesGetItemById(
     sel.options[sel.selectedIndex].text,
     itemTypeId
   );
   pufflesDoesFileExist(
-    pufflesPlayercardItems.directory + found[0].paper_item_id + ".png",
+    config.directory + found[0].paper_item_id + ".png",
     function (exists) {
       if (exists) {
-        document.getElementById("puffles-" + itemTypeId + "-item-image").src =
-          pufflesPlayercardItems.directory + found[0].paper_item_id + ".png";
-        document.getElementById("puffles-item-search-error").style.display =
+        document.querySelector("#puffles-" + itemTypeId + "-item-image").src =
+          config.directory + found[0].paper_item_id + ".png";
+        document.querySelector("#puffles-item-search-error").style.display =
           "none";
 
         if (typeof Storage !== "undefined") {
@@ -313,22 +294,22 @@ function pufflesUpdateItem(itemTypeId) {
         }
 
         if (allPufflesBackItems.includes(found[0].paper_item_id)) {
-          document.getElementById("puffles-10-item-image").src =
-            pufflesPlayercardItems.directory +
+          document.querySelector("#puffles-10-item-image").src =
+            config.directory +
             found[0].paper_item_id +
             "_back.png";
         } else {
-          document.getElementById("puffles-10-item-image").src =
-            pufflesPlayercardItems.directory + "empty.png";
+          document.querySelector("#puffles-10-item-image").src =
+            config.directory + "empty.png";
         }
       } else {
-        document.getElementById("puffles-10-item-image").src =
-          pufflesPlayercardItems.directory + "empty.png";
-        document.getElementById("puffles-item-search-error").innerHTML =
+        document.querySelector("#puffles-10-item-image").src =
+          config.directory + "empty.png";
+        document.querySelector("#puffles-item-search-error").innerHTML =
           "Sorry! No files are stored for <strong>" +
           found[0].label +
           "</strong>.";
-        document.getElementById("puffles-item-search-error").style.display =
+        document.querySelector("#puffles-item-search-error").style.display =
           "block";
       }
       setInterval(pufflesConstructPlayercardCanvas, 300);

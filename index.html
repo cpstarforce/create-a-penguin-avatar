@@ -3,14 +3,29 @@
 <html>
 
   <head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Generate a custom Club Penguin avatar or player card using our tool. Choose from all of Club Penguin's original items and accessories to create a new you!">
+    <meta name="keywords" content="create a penguin avatar, star force, star force of club penguin, club penguin, club penguin armies, club penguin avatar, club penguin player card, club penguin player card generator, create a club penguin avatar, puffles player card generator">
+    <meta name="version" content="2.0.0">
+    <meta name="theme-color" content="#9532A8">
+    <meta name="og:site_name" content="Star Force • Create a Penguin Avatar">
+    <meta name="og:title" content="Create a Penguin Avatar">
+    <meta name="og:description" content="Generate a custom Club Penguin avatar or player card using our tool. Choose from all of Club Penguin's original items and accessories to create a new you!">
+    <meta name="og:type" content="website">
+    <meta name="og:image" content="https://cpstarforce.github.io/create-a-penguin-avatar/logo.png">
     <title>Penguin Avatar Generator</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="main.css">
+
+    <script src="items.js" defer></script>
+    <script src="main.js" defer></script>
+
   </head>
 
   <body>
 
-    <div style="display:none">
-
+    <div style="display: none;">
       <img id="puffles-1-item-image" src="assets/15.png">
       <img id="puffles-2-item-image" src="assets/empty.png">
       <img id="puffles-3-item-image" src="assets/empty.png">
@@ -21,93 +36,101 @@
       <img id="puffles-8-item-image" src="assets/empty.png">
       <img id="puffles-9-item-image" src="assets/empty.png">
       <img id="puffles-10-item-image" src="assets/empty.png">
-    
     </div>
-    
-    <div class="puffles-playercard-generator is-loading" id="puffles-playercard">
-    
+
+    <h1>Create A Penguin Avatar</h1>
+
+    <main class="puffles-playercard-generator is-loading" id="puffles-playercard">
       <div class="puffles-playercard-generator-loading-placeholder"></div>
-    
       <div class="puffles-playercard-generator-wrapper">
         <div class="puffles-playercard-generator-item-search">
-          <label for="puffles-item-search">Search item by name or ID:</label>
-          <input type="search" id="puffles-item-search" name="puffles-item-search">
+          <label for="puffles-item-search">Search an item:</label>
+          <input type="search" id="puffles-item-search" name="puffles-item-search" placeholder="Type an exact item name or ID">
           <button onclick="pufflesSearchItem(false)">Search</button>
           <button onclick="pufflesSearchItem(true)">Add</button>
-          <p id="puffles-item-search-result" class="puffles-playercard-item-search-result"></p>
+          <p id="puffles-item-search-result" class="puffles-playercard-item-search-result">Get started by searching or selecting an item.</p>
           <p id="puffles-item-search-error" class="puffles-playercard-item-search-error"></p>
         </div>
         <canvas id="puffles-canvas" class="puffles-playercard-canvas" width="600" height="600">
-          Your browser does not support this generator - sorry!
+          Your browser does not support the HTML canvas! Therefore, you can't use the generator on this browser.
         </canvas>
-        <br>
-        <button onclick="pufflesGenerateRandomPlayercard()" class="puffles-playercard-action">Random</a>
-        <button onclick="pufflesClearPlayercard()" class="puffles-playercard-action clear-action">Clear</a>
-        <button
-          id="puffles-playercard-download"
-          download="club-penguin-playercard"
-          href=""
-          class="puffles-playercard-generator-download-button"
-        >
-          Download
-        </button>
+        <div>
+          <button onclick="pufflesGenerateRandomPlayercard()" class="large-button puffles-playercard-action">Random</button>
+          <button onclick="pufflesClearPlayercard()" class="large-button puffles-playercard-action clear-action">Clear</button>
+          <button id="puffles-playercard-download" download="club-penguin-playercard" href="" class="large-button puffles-playercard-generator-download-button">Download</button>
+        </div>
       </div>
     
       <div class="puffles-playercard-generator-items">
 
         <div>
-          <b>Color</b>
-          <br>
-          <select id="puffles-1-item" onchange="pufflesUpdateItem(1)" size="4"></select>
+
+          <div>
+            <b>Color</b>
+            <select id="puffles-1-item" onchange="pufflesUpdateItem(1)"></select>
+          </div>
+          <div>
+            <b>Head Item</b>
+            <select id="puffles-2-item" onchange="pufflesUpdateItem(2)"></select>
+          </div>
+
         </div>
         <div>
-          <b>Head Item</b>
-          <br>
-          <select id="puffles-2-item" onchange="pufflesUpdateItem(2)" size="4"></select>
+
+          <div>
+            <b>Face Item</b>
+            <select id="puffles-3-item" onchange="pufflesUpdateItem(3)"></select>
+          </div>
+          <div>
+            <b>Neck Item</b>
+            <select id="puffles-4-item" onchange="pufflesUpdateItem(4)"></select>
+          </div>
+
         </div>
         <div>
-          <b>Face Item</b>
-          <br>
-          <select id="puffles-3-item" onchange="pufflesUpdateItem(3)" size="4"></select>
+
+          <div>
+            <b>Body Item</b>
+            <select id="puffles-5-item" onchange="pufflesUpdateItem(5)"></select>
+          </div>
+          <div>
+            <b>Hand Item</b>
+            <select id="puffles-6-item" onchange="pufflesUpdateItem(6)"></select>
+          </div>
+
         </div>
         <div>
-          <b>Neck Item</b>
-          <br>
-          <select id="puffles-4-item" onchange="pufflesUpdateItem(4)" size="4"></select>
+
+          <div>
+            <b>Feet Item</b>
+            <select id="puffles-7-item" onchange="pufflesUpdateItem(7)"></select>
+          </div>
+          <div>
+            <b>Pin</b>
+            <select id="puffles-8-item" onchange="pufflesUpdateItem(8)"></select>
+          </div>
+
         </div>
         <div>
-          <b>Body Item</b>
-          <br>
-          <select id="puffles-5-item" onchange="pufflesUpdateItem(5)" size="4"></select>
-        </div>
-        <div>
-          <b>Hand Item</b>
-          <br>
-          <select id="puffles-6-item" onchange="pufflesUpdateItem(6)" size="4"></select>
-        </div>
-        <div>
-          <b>Feet Item</b>
-          <br>
-          <select id="puffles-7-item" onchange="pufflesUpdateItem(7)" size="4"></select>
-        </div>
-        <div>
-          <b>Pin</b>
-          <br>
-          <select id="puffles-8-item" onchange="pufflesUpdateItem(8)" size="4"></select>
-        </div>
-        <div>
-          <b>Background</b>
-          <br>
-          <select id="puffles-9-item" onchange="pufflesUpdateItem(9)" size="4"></select>
+
+          <div>
+            <b>Background</b>
+            <select id="puffles-9-item" onchange="pufflesUpdateItem(9)"></select>
+          </div>
+
         </div>
       </div>
 
-    </div>
+    </main>
 
-    <p style="text-align: center;">This generator is a reworked version of Aurorum's <b>Puffles Playercard Generator</b>, available on <b>clubpenguinmountains.com</b>.</p>
-
-    <script src="items.js"></script>
-    <script src="scripts.js"></script>
+    <footer>
+      <p style="text-align: center;">
+        This tool is a Star Force (SF) rework of Aurorum's <b>Puffles Playercard Generator</b>, available on <b>clubpenguinmountains.com</b>.
+      </p>
+      <p>
+        <a href="https://discord.com/invite/MW6BFSymvP" target="_blank">Join the Star Force on Discord</a>
+      </p>
+    </footer>
 
   </body>
 
